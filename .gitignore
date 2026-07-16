@@ -1,0 +1,43 @@
+# 环境变量 - 包含API密钥，绝对不能提交
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 日志
+logs/
+*.log
+
+# 运行时报告
+reports/
+
+# 临时文件
+no control
+will control
+will control2
+
+# 个人文件
+实习简历项目.txt
+AI智能旅行规划工具.txt
+
+# OS
+.DS_Store
+Thumbs.db

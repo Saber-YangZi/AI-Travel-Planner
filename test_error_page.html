@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>错误测试页面</title>
+    <!-- 故意加载不存在的资源 -->
+    <link rel="stylesheet" href="/not-found.css">
+    <script src="/missing.js"></script>
+</head>
+<body>
+    <h1>错误监控测试页面</h1>
+    <img src="/broken-image.png" alt="broken">
+    <button id="trigger-error">触发 JS 错误</button>
+    <button id="trigger-promise">触发 Promise 拒绝</button>
+    <button id="trigger-console">触发 console.error</button>
+    <button id="trigger-fetch">触发网络错误</button>
+
+    <script>
+        // 5秒后自动触发各类错误
+        setTimeout(function() {
+            // 1) JS 运行时错误
+            document.getElementById('trigger-error').onclick = function() {
+                undefinedFunction();
+            };
+
+            // 2) Promise 拒绝
+            document.getElementById('trigger-promise').onclick = function() {
+                Promise.reject(new Error('测试: Promise 被拒绝但没有 catch'));
+            };
+
+            // 3) console.error
+            document.getElementById('trigger-console').onclick = function() {
+                console.error('测试: 这是一条 console.error 日志');
+                console.error({ err: '测试对象', code: 500 });
+            };
+
+            // 4) 网络请求失败
+            document.getElementById('trigger-fetch').onclick = function() {
+                fetch('https://invalid-host-that-does-not-exist-12345.com/api')
+                    .then(r => r.json())
+                    .catch(function() { /* 故意不处理 */ });
+            };
+        }, 100);
+
+        // 触发所有错误
+        setTimeout(function() {
+            document.querySelectorAll('button').forEach(function(btn) { btn.click(); });
+        }, 500);
+    </script>
+</body>
+</html>
